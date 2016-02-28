@@ -66,7 +66,7 @@
 </ul>
 
 <p>
-  For additional information on implementation see <a href="d2/files/dupescan/README">the README file</a>
+  For additional information on implementation see <a href="files/dupescan/README">the README file</a>
 </p>
 
 <p>
