@@ -1,0 +1,30 @@
+# PvPGN 1.8.0rc2 fix for non-expansion ladder title bug
+# by Florian 'fw' Weingarten <flo@hackvalue.de> <http://hackvalue.de/>
+
+# usage:    go to pvpgn-1.8.0rc2 directory and use "patch -p0 < ladder_xml_output_bug.patch"
+
+# software: pvpgn
+# version:  1.8.0rc2
+# file:     src/d2dbs/d2ladder.c
+# function: get_prefix()
+# bug:      the character titles in generated d2ladder.xml are incorrect in D2 (not XP).
+#           Dukes are titled as Count, Kings are titled as Dukes, etc.
+#           see https://forums.pvpgn.org/index.php/topic,5547.0.html
+# reason:   the software assumes five acts, which is only correct for expansion
+# fix:      use /4 instead of /5 (well, use macros for it) for non-expansion ladders
+
+--- src/d2dbs/d2ladder.c	2004-11-30 22:49:02.000000000 +0100
++++ src/d2dbs/d2ladder.c	2006-07-22 22:18:50.000000000 +0200
+@@ -576,8 +576,10 @@
+ 
+   static int sex[11] = {0,1,1,0,0,0,0,1,0,0,0};
+ 
+-  difficulty = ((status >> 0x08) & 0x0f) / 5;
+-
++  if(type == 0 || type == 1) // D2
++    difficulty = charstatus_get_difficulty(status);  
++  else if(type == 2 || type == 3) // D2XP
++    difficulty = charstatus_get_difficulty_expansion(status);
+ 			           
+   return prefix[difficulty][type][sex[class]];
+ }

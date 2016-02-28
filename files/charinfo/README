@@ -1,0 +1,15 @@
+What is charinfo?
+	A small utility that prints a list of all characters found in the pvpgn charsave directory.
+	It reads the level, class and status (dead or alive) and prints it.
+
+Why?
+	I wrote it so I can easily parse a charlist with php to integrate into a website. It would have been
+	a pain in the ass to parse the binary coded charfiles with php, so I call this C program periodically with
+	cron and write the result to a place my php script can read it.
+
+How do I set it up?
+	Just change the two DEFINEs in the .c file to your directory and compile it using "make".
+
+Who are you?
+	Florian 'fw' Weingarten
+	http://hackvalue.de/
